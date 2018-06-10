@@ -17,8 +17,8 @@ public class Resume {
         return uuid;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return this.uuid.equals(obj);
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        return this.uuid.equals(obj);
+//    }
 }

@@ -6,18 +6,16 @@ import java.util.Arrays;
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
-    Resume r = new Resume("Данное резюме отсутсвует в базе");
-
-    int index = 0;
+    int indexArrayResume = 0;
 
     void clear() {
-        Arrays.fill(storage, null);
-        index = 0;
+        Arrays.fill(storage, 0, indexArrayResume - 1, null);
+        indexArrayResume = 0;
     }
 
     void save(Resume r) {
-        storage[index] = r;
-        index++;
+        storage[indexArrayResume] = r;
+        indexArrayResume++;
     }
 
     Resume get(String uuid) {
@@ -26,16 +24,20 @@ public class ArrayStorage {
             return storage[resultSearch];
         }
 
-        return r;
+        return null;
     }
 
     void delete(String uuid) {
-        Resume[] storageCopy = Arrays.copyOfRange(storage, 0, index);
-        for (int i = search(uuid); i < index - 1; i++) {
-            storage[i] = storageCopy[i + 1];
-
-        }
-        index--;
+//        Resume[] storageCopy = Arrays.copyOfRange(storage, 0, indexArrayResume);
+        int searchUuid = search(uuid);
+        System.arraycopy(storage,searchUuid+1,storage,searchUuid,indexArrayResume-1);
+//        if (searchUuid >= 0) {
+//            for (int i = searchUuid; i < indexArrayResume - 1; i++) {
+//                storage[i] = storageCopy[i + 1];
+//
+//            }
+            indexArrayResume--;
+//        }
     }
 
     /**
@@ -43,24 +45,19 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
 
-        if (index == 0) {
-            Resume[] storageNull = new Resume[1];
-            storageNull[0] = new Resume("Массив пуст!");
-            return storageNull;
-        }
+        return Arrays.copyOfRange(storage, 0, indexArrayResume);
 
-        return Arrays.copyOfRange(storage, 0, index);
     }
 
     int size() {
-        return index;
+        return indexArrayResume;
     }
 
     private int search(String uuid) {
         if (!uuid.isEmpty()) {
-            for (int i = 0; i < index; i++) {
+            for (int i = 0; i < indexArrayResume; i++) {
 
-                if (storage[i].equals(uuid)) {
+                if (storage[i].uuid==uuid) {
                     return i;
                 }
             }
