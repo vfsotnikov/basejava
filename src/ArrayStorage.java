@@ -6,16 +6,16 @@ import java.util.Arrays;
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
-    int indexArrayResume = 0;
+    int indexNextResume = 0;
 
     void clear() {
-        Arrays.fill(storage, 0, indexArrayResume - 1, null);
-        indexArrayResume = 0;
+        Arrays.fill(storage, 0, indexNextResume - 1, null);
+        indexNextResume = 0;
     }
 
     void save(Resume r) {
-        storage[indexArrayResume] = r;
-        indexArrayResume++;
+        storage[indexNextResume] = r;
+        indexNextResume++;
     }
 
     Resume get(String uuid) {
@@ -28,16 +28,9 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-//        Resume[] storageCopy = Arrays.copyOfRange(storage, 0, indexArrayResume);
         int searchUuid = search(uuid);
-        System.arraycopy(storage,searchUuid+1,storage,searchUuid,indexArrayResume-1);
-//        if (searchUuid >= 0) {
-//            for (int i = searchUuid; i < indexArrayResume - 1; i++) {
-//                storage[i] = storageCopy[i + 1];
-//
-//            }
-            indexArrayResume--;
-//        }
+        System.arraycopy(storage,searchUuid+1,storage,searchUuid, indexNextResume -1);
+            indexNextResume--;
     }
 
     /**
@@ -45,17 +38,17 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
 
-        return Arrays.copyOfRange(storage, 0, indexArrayResume);
+        return Arrays.copyOfRange(storage, 0, indexNextResume);
 
     }
 
     int size() {
-        return indexArrayResume;
+        return indexNextResume;
     }
 
     private int search(String uuid) {
         if (!uuid.isEmpty()) {
-            for (int i = 0; i < indexArrayResume; i++) {
+            for (int i = 0; i < indexNextResume; i++) {
 
                 if (storage[i].uuid==uuid) {
                     return i;

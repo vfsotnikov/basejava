@@ -6,7 +6,8 @@ public class Resume {
     // Unique identifier
     String uuid;
 
-    public Resume(){}
+    public Resume() {
+    }
 
     public Resume(String uuid) {
         this.uuid = uuid;
@@ -17,8 +18,4 @@ public class Resume {
         return uuid;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        return this.uuid.equals(obj);
-//    }
 }

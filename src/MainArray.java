@@ -26,7 +26,7 @@ public class MainArray {
                 case "list":
                     printAll();
                     break;
-                case "size":
+                case "indexNextResume":
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
