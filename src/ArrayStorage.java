@@ -9,7 +9,7 @@ public class ArrayStorage {
     int indexNextResume = 0;
 
     void clear() {
-        Arrays.fill(storage, 0, indexNextResume - 1, null);
+        Arrays.fill(storage, 0, indexNextResume, null);
         indexNextResume = 0;
     }
 
@@ -28,9 +28,11 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int searchUuid = search(uuid);
-        System.arraycopy(storage,searchUuid+1,storage,searchUuid, indexNextResume -1);
+        int resultSearch = search(uuid);
+        if (resultSearch >= 0) {
+            System.arraycopy(storage, resultSearch + 1, storage, resultSearch, indexNextResume - 1);
             indexNextResume--;
+        }
     }
 
     /**
@@ -50,7 +52,7 @@ public class ArrayStorage {
         if (!uuid.isEmpty()) {
             for (int i = 0; i < indexNextResume; i++) {
 
-                if (storage[i].uuid==uuid) {
+                if (storage[i].uuid == uuid) {
                     return i;
                 }
             }
