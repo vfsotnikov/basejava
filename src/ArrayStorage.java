@@ -30,7 +30,7 @@ public class ArrayStorage {
     void delete(String uuid) {
         int resultSearch = search(uuid);
         if (resultSearch >= 0) {
-            System.arraycopy(storage, resultSearch + 1, storage, resultSearch, indexNextResume - 1);
+            System.arraycopy(storage, resultSearch + 1, storage, resultSearch, indexNextResume - 1 - resultSearch);
             indexNextResume--;
         }
     }
