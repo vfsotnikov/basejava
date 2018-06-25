@@ -1,34 +1,45 @@
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10000];
 
-    int indexNextResume = 0;
+    private int indexNextResume = 0;
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, 0, indexNextResume, null);
         indexNextResume = 0;
     }
 
-    void save(Resume r) {
-        storage[indexNextResume] = r;
-        indexNextResume++;
+    public void update(Resume r) {
+        int posResume = search(r.uuid, true);
+        if (posResume >= 0) storage[posResume] = r;
     }
 
-    Resume get(String uuid) {
-        int resultSearch = search(uuid);
+    public void save(Resume r) {
+        int posResume = search(r.uuid, false);
+        if (posResume == -1 && indexNextResume != storage.length) {
+            storage[indexNextResume] = r;
+            indexNextResume++;
+        } else {
+            System.out.println("Массив резюме заполнен, добавление не возможно!");
+        }
+
+    }
+
+    public Resume get(String uuid) {
+        int resultSearch = search(uuid, true);
         if (resultSearch >= 0) {
             return storage[resultSearch];
         }
-
         return null;
     }
 
-    void delete(String uuid) {
-        int resultSearch = search(uuid);
+    public void delete(String uuid) {
+        int resultSearch = search(uuid, true);
         if (resultSearch >= 0) {
             System.arraycopy(storage, resultSearch + 1, storage, resultSearch, indexNextResume - 1 - resultSearch);
             indexNextResume--;
@@ -38,17 +49,15 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
-
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, indexNextResume);
-
     }
 
-    int size() {
+    public int size() {
         return indexNextResume;
     }
 
-    private int search(String uuid) {
+    private int search(String uuid, boolean alarm) {
         if (!uuid.isEmpty()) {
             for (int i = 0; i < indexNextResume; i++) {
 
@@ -57,6 +66,7 @@ public class ArrayStorage {
                 }
             }
         }
+        if (alarm) System.out.println("Резюме не найдено в базе!");
         return -1;
     }
 
