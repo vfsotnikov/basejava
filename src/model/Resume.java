@@ -9,7 +9,7 @@ public class Resume implements Comparable<Resume>{
 
     private String uuid;
 
-    public Resume() {}
+    private Resume() {}
 
     public Resume(String uuid) {
         this.uuid = uuid;

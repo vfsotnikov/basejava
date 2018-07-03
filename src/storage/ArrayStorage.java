@@ -2,8 +2,6 @@ package storage;
 
 import model.Resume;
 
-import java.util.Arrays;
-
 /**
  * Array based storage for Resumes
  */
