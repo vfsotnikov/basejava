@@ -7,21 +7,19 @@ import java.util.Objects;
  */
 public class Resume implements Comparable<Resume>{
 
+    private String uuid;
+
+    public Resume() {}
+
+    public Resume(String uuid) {
+        this.uuid = uuid;
+    }
+
     public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    // Unique identifier
-    private String uuid;
-
-    public Resume() {
-    }
-
-    public Resume(String uuid) {
         this.uuid = uuid;
     }
 

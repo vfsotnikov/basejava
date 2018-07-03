@@ -2,6 +2,8 @@ package storage;
 
 import model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -13,25 +15,23 @@ public abstract class AbstractArrayStorage implements Storage {
 
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
 
     }
 
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
         if (index < 0) {
-            System.out.println("Resume " + r.getUuid() + " not exist");
+            System.out.println("Resume with uuid = " + resume.getUuid() + " not exist");
         } else {
-            storage[index] = r;
+            storage[index] = resume;
         }
     }
 
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > -1) {
+        if (index >= 0) {
             System.out.println("Resume " + r.getUuid() + " already exist");
         } else if (size >= storage.length) {
             System.out.println("Storage overflow");
@@ -52,7 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Resume " + uuid + " not exist");
         } else {
             fillDeletedElement(index);
@@ -66,9 +66,7 @@ public abstract class AbstractArrayStorage implements Storage {
      */
 
     public Resume[] getAll() {
-        Resume[] result = new Resume[size];
-        System.arraycopy(storage, 0, result, 0, size);
-        return result;
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public int size() {
@@ -77,7 +75,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void insertElement(Resume r, int index);
+    protected abstract void insertElement(Resume resume, int index);
 
     protected abstract void fillDeletedElement(int index);
 }
