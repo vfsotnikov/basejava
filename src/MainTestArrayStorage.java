@@ -1,5 +1,4 @@
 import model.Resume;
-import storage.ArrayStorage;
 import storage.SortedArrayStorage;
 import storage.Storage;
 
@@ -23,7 +22,7 @@ public class MainTestArrayStorage {
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-        resume3.setUuid("uuid3+");
+        resume3 = new Resume("uuid3+");
         ARRAY_STORAGE.update(resume3);
 
         printAll();
