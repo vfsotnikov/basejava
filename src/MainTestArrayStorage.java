@@ -1,12 +1,12 @@
 import model.Resume;
-import storage.SortedArrayStorage;
+import storage.ArrayStorage;
 import storage.Storage;
 
 /**
  * Test for com.urise.webapp.storage.storage.ArrayStorage
  */
 public class MainTestArrayStorage {
-    private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
+    private static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         Resume resume1 = new Resume("uuid1");
@@ -20,10 +20,10 @@ public class MainTestArrayStorage {
         System.out.println("Get r1: " + ARRAY_STORAGE.get(resume1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+//        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-        resume3 = new Resume("uuid3+");
-        ARRAY_STORAGE.update(resume3);
+//        resume3 = new Resume("uuid3+");
+//        ARRAY_STORAGE.update(resume3);
 
         printAll();
         ARRAY_STORAGE.delete(resume1.getUuid());

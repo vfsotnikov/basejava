@@ -37,9 +37,20 @@ public class MainCollections {
         mapResumes.put(UUID_2,RESUME_2);
         mapResumes.put(UUID_3,RESUME_3);
 
+        // Bad !!!
+//        for (String uuid: mapResumes.keySet()){
+//            System.out.println(mapResumes.get(uuid));
+//        }
+
+
         for (Map.Entry<String,Resume> itResumes2  : mapResumes.entrySet()){
             System.out.println(itResumes2.getValue());
         }
         List list = new LinkedList();
+
+//        List<Resume> resumes = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+//        resumes.remove(1);
+//        System.out.println(resumes);
+
     }
 }

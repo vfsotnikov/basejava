@@ -1,7 +1,6 @@
 package storage;
 
 import exception.ExistStorageException;
-import exception.NotExistStorageException;
 import exception.OverflowStorageException;
 import model.Resume;
 
@@ -10,30 +9,24 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected static final int STORAGE_LIMIT = 100;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
 
-    public void clear() {
+    protected void clearStorage() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
 
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
-        }
+    protected void updateResumeIntoStorage(Resume resume, int index) {
+        storage[index] = resume;
     }
 
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    public void saveResumeIntoStorage(Resume resume, int index) {
         if (index >= 0) {
             throw new ExistStorageException(resume.getUuid());
         } else if (size >= STORAGE_LIMIT) {
@@ -44,40 +37,28 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    protected Resume getResumeFromStorage(int index) {
         return storage[index];
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            fillDeletedElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
+    protected void deleteResumeFromStorage(int index) {
+        fillDeletedElement(index);
+        storage[size - 1] = null;
+        size--;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
 
-    public Resume[] getAll() {
+    protected Resume[] getAllResumeFromStorage(){
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int size() {
+    protected int sizeOfStorage() {
         return size;
     }
 
-    protected abstract int getIndex(String uuid);
-
-    protected abstract void insertElement(Resume resume, int index);
-
     protected abstract void fillDeletedElement(int index);
+
 }
